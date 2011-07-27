@@ -12,6 +12,8 @@ class PhpdocProject extends XoopsObject
         $this->initVar('projectid', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('parentid', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('itemid', XOBJ_DTYPE_INT, 0, false);
+        $this->initVar('pathid', XOBJ_DTYPE_INT, 0, false);
+        $this->initVar('folder', XOBJ_DTYPE_TXTBOX, '', false, 128);
         $this->initVar('weight', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('status', XOBJ_DTYPE_ENUM, '_MI_PHPDOC_STATUS_STABLE', false, false, false, array('_MI_PHPDOC_STATUS_ALPHA','_MI_PHPDOC_STATUS_BETA','_MI_PHPDOC_STATUS_RC','_MI_PHPDOC_STATUS_STABLE','_MI_PHPDOC_STATUS_MATURE','_MI_PHPDOC_STATUS_EXPERIMENTAL'));
         $this->initVar('url', XOBJ_DTYPE_TXTBOX, '', false, 255);

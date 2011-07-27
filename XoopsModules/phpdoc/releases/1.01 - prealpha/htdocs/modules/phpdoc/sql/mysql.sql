@@ -127,19 +127,23 @@ CREATE TABLE `phpdoc_items_digest` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `phpdoc_paths` (
-  `pathid` int(12) unsigned NOT NULL AUTO_INCREMENT,
-  `folder` varchar(128) DEFAULT NULL,
-  `path` varchar(500) DEFAULT NULL,
-  `itemid` int(12) unsigned DEFAULT NULL,
-  `md5` varchar(32) DEFAULT NULL,
-  `created` int(12) unsigned DEFAULT '0',
-  `updated` int(12) unsigned DEFAULT '0',
+  `pathid` INT(12) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `folder` VARCHAR(128) DEFAULT NULL,
+  `path` VARCHAR(500) DEFAULT NULL,
+  `relative` ENUM('_MI_PHPDOC_XOOPS_ROOT_PATH','_MI_PHPDOC_XOOPS_UPLOAD_PATH','_MI_PHPDOC_XOOPS_VAR_PATH','_MI_PHPDOC_XOOPS_TRUST_PATH','_MI_PHPDOC_XOOPS_MODULE_PATH','_MI_PHPDOC_PROJECTS_PATH','_MI_PHPDOC_OPEN_PATH') DEFAULT '_MI_PHPDOC_PROJECTS_PATH',
+  `itemid` INT(12) UNSIGNED DEFAULT NULL,
+  `md5` VARCHAR(32) DEFAULT NULL,
+  `created` INT(12) UNSIGNED DEFAULT '0',
+  `updated` INT(12) UNSIGNED DEFAULT '0',
+  `actioned` INT(12) UNSIGNED DEFAULT '0',
   PRIMARY KEY (`pathid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `phpdoc_projects` (
   `projectid` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `parentid` int(12) unsigned DEFAULT '0',
+  `pathid` int(12) unsigned DEFAULT '0',  
+  `folder` varchar(128) DEFAULT NULL,
   `itemid` int(16) unsigned DEFAULT '0',
   `weight` int(4) unsigned DEFAULT '1',
   `status` enum('_MI_PHPDOC_STATUS_ALPHA','_MI_PHPDOC_STATUS_BETA','_MI_PHPDOC_STATUS_RC','_MI_PHPDOC_STATUS_STABLE','_MI_PHPDOC_STATUS_MATURE','_MI_PHPDOC_STATUS_EXPERIMENTAL') DEFAULT '_MI_PHPDOC_STATUS_STABLE',
