@@ -452,10 +452,55 @@
 				$GLOBALS['phpdocTpl']->display('db:phpdoc_cpanel_item_digest_list.html');
 				break;	
 
-			case 'permissions':
+			case 'filetype':
 
 				xoops_loadLanguage('admin', 'phpdoc');
 				phpdoc_adminMenu(10);
+				
+				include_once $GLOBALS['xoops']->path( "/class/pagenav.php" );
+				include_once $GLOBALS['xoops']->path( "/class/template.php" );
+				$GLOBALS['phpdocTpl'] = new XoopsTpl();
+				
+				$filetype_handler =& xoops_getmodulehandler('filetype', 'phpdoc');
+					
+				$ttl = $filetype_handler->getCount(NULL);
+				$limit = !empty($_REQUEST['limit'])?intval($_REQUEST['limit']):30;
+				$start = !empty($_REQUEST['start'])?intval($_REQUEST['start']):0;
+				$order = !empty($_REQUEST['order'])?$_REQUEST['order']:'DESC';
+				$sort = !empty($_REQUEST['sort'])?''.$_REQUEST['sort'].'':'created';
+				
+				$pagenav = new XoopsPageNav($ttl, $limit, $start, 'start', 'limit='.$limit.'&sort='.$sort.'&order='.$order.'&op='.$op);
+				$GLOBALS['phpdocTpl']->assign('pagenav', $pagenav->renderNav());
+
+				$GLOBALS['phpdocTpl']->assign('php_self', $_SERVER['PHP_SELF']);
+				$GLOBALS['phpdocTpl']->assign('limit', $limit);
+				$GLOBALS['phpdocTpl']->assign('start', $start);
+				$GLOBALS['phpdocTpl']->assign('order', $order);
+				$GLOBALS['phpdocTpl']->assign('sort', $sort);
+				$GLOBALS['phpdocTpl']->assign('op', $op);
+				$GLOBALS['phpdocTpl']->assign('fct', $fct);
+				
+				foreach (array(	'filetypeid','filetype', 'created', 'updated', 'actioned') as $id => $key) {
+					$GLOBALS['phpdocTpl']->assign(strtolower(str_replace('-','_',$key).'_th'), '<a href="'.$_SERVER['PHP_SELF'].'?start='.$start.'&limit='.$limit.'&sort='.str_replace('_','-',$key).'&order='.((str_replace('_','-',$key)==$sort)?($order=='DESC'?'ASC':'DESC'):$order).'&op='.$op.'">'.(defined('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key)))?constant('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))):'_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))).'</a>');
+				}
+					
+				$criteria = new Criteria('1','1');
+				$criteria->setStart($start);
+				$criteria->setLimit($limit);
+				$criteria->setSort('`'.$sort.'`');
+				$criteria->setOrder($order);
+					
+				$filetypes = $filetype_handler->getObjects($criteria, true);
+				foreach($filetypes as $id => $filetype) {
+					$GLOBALS['phpdocTpl']->append('filetypes', $filetype->toArray());
+				}
+						
+				$GLOBALS['phpdocTpl']->display('db:phpdoc_cpanel_filetype_list.html');
+				break;
+			case 'permissions':
+
+				xoops_loadLanguage('admin', 'phpdoc');
+				phpdoc_adminMenu(11);
 				
 				break;
 		}																				

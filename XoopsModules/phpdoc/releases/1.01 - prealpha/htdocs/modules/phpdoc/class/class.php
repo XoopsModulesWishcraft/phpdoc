@@ -38,7 +38,7 @@ class PhpdocClass extends XoopsObject
 		return $ret;
 	}
 	
-	function getForm($querystring = '', $caption = true, $frm = false) {
+	function getForm($querystring = '', $caption = true, $frm = false, $render = true) {
 		if ($frm==false)
 			$frm=array();
 		
@@ -59,6 +59,8 @@ class PhpdocClass extends XoopsObject
 				$frm['weight'] = new XoopsFormText(_FRM_PHPDOC_WEIGHT, $id.'[weight]', 5, 10, $this->getVar('weight'));
 				$frm['name'] = new XoopsFormText(_FRM_PHPDOC_CLASSNAME, $id.'[name]', 35, 128, $this->getVar('name'));
 				$frm['extends'] = new XoopsFormText(_FRM_PHPDOC_EXTENDSCLASS, $id.'[extends]', 35, 128, $this->getVar('extends'));
+				if ($render==false)
+					return $frm;
 				break;
 			case false:
 				$frm['classid'] = new XoopsFormHidden('id['.$id.']', 'class');

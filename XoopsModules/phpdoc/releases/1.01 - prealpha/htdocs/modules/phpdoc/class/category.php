@@ -31,7 +31,7 @@ class PhpdocCategory extends XoopsObject
 		return $ret;
 	}
 	
-	function getForm($querystring = '', $caption = true, $frm = false) {
+	function getForm($querystring = '', $caption = true, $frm = false, $render = true) {
 		if ($frm==false)
 			$frm=array();
 		
@@ -46,6 +46,8 @@ class PhpdocCategory extends XoopsObject
 				$frm['weight'] = new XoopsFormText(_FRM_PHPDOC_WEIGHT, $id.'[weight]', 5, 10, $this->getVar('weight'));
 				$frm['itemid'] = new XoopsFormHidden($id.'[itemid]', $this->getVar('itemid'));
 				$frm = $item_digest_handler->getForm($this->getVar('itemid'), (isset($_GET['language'])?$_GET['language']:$GLOBALS['xoopsConfig']['language']), $querystring, $caption, $frm);
+				if ($render==false)
+					return $frm;
 				break;
 			case false:
 				$frm['cid'] = new XoopsFormHidden('id['.$id.']', 'category');

@@ -10,6 +10,7 @@ class PhpdocPath extends XoopsObject
     function PhpdocPath($fid = null)
     {
         $this->initVar('pathid', XOBJ_DTYPE_INT, 0, false);
+        $this->initVar('parentid', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('projectid', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('fileid', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('folder', XOBJ_DTYPE_TXTBOX, '', false, 128);

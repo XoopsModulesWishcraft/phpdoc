@@ -10,7 +10,8 @@
 	define('_MI_PHPDOC_ADMIN_MENU7', 'Variables');
 	define('_MI_PHPDOC_ADMIN_MENU8', 'Paths');
 	define('_MI_PHPDOC_ADMIN_MENU9', 'Language Digest');
-	define('_MI_PHPDOC_ADMIN_MENU10', 'Permissions');
+	define('_MI_PHPDOC_ADMIN_MENU10', 'File Types');
+	define('_MI_PHPDOC_ADMIN_MENU11', 'Permissions');
 
 	// Enumerators
 	define('_MI_PHPDOC_MODE_PUBLIC', 'Public');

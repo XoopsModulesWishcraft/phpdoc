@@ -38,7 +38,11 @@ $adminmenu[9]['icon'] = 'images/admin/item_digest.png';
 $adminmenu[9]['image'] = 'images/admin/item_digest.png';
 $adminmenu[9]['link'] = "admin/index.php?op=list&fct=item_digest";
 $adminmenu[10]['title'] = _MI_PHPDOC_ADMIN_MENU10;
-$adminmenu[10]['icon'] = 'images/admin/permission.png';
-$adminmenu[10]['image'] = 'images/admin/permission.png';
-$adminmenu[10]['link'] = "admin/index.php?op=list&fct=permissions";
+$adminmenu[10]['icon'] = 'images/admin/filetype.png';
+$adminmenu[10]['image'] = 'images/admin/filetype.png';
+$adminmenu[10]['link'] = "admin/index.php?op=list&fct=filetype";
+$adminmenu[11]['title'] = _MI_PHPDOC_ADMIN_MENU11;
+$adminmenu[11]['icon'] = 'images/admin/permission.png';
+$adminmenu[11]['image'] = 'images/admin/permission.png';
+$adminmenu[11]['link'] = "admin/index.php?op=list&fct=permissions";
 ?>
