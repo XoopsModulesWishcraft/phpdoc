@@ -1,15 +1,6 @@
 <?php
 	
-	include('../../../mainfile.php');
-	include('../../../include/cp_functions.php');
-	include('../include/functions.php');	
-	include('../include/forms.phpdoc.php');
-
-	$moduleHandler =& xoops_gethandler('module');
-	$configHandler =& xoops_gethandler('config');
-	$xophpdoc = $moduleHandler->getByDirname('phpdoc');
-	if (is_object($xophpdoc))
-		$GLOBALS['xoopsModuleConfig'] = $configHandler->getConfigList($xophpdoc->getVar('mid'));
+	include('header.php');
 			
 	xoops_cp_header();
 	
@@ -111,6 +102,8 @@
 				$GLOBALS['phpdocTpl']->assign('start', $start);
 				$GLOBALS['phpdocTpl']->assign('order', $order);
 				$GLOBALS['phpdocTpl']->assign('sort', $sort);
+				$GLOBALS['phpdocTpl']->assign('op', $op);
+				$GLOBALS['phpdocTpl']->assign('fct', $fct);
 				
 				foreach (array(	'cid','parentid','weight','itemid','md5', 'created', 'updated') as $id => $key) {
 					$GLOBALS['phpdocTpl']->assign(strtolower(str_replace('-','_',$key).'_th'), '<a href="'.$_SERVER['PHP_SELF'].'?start='.$start.'&limit='.$limit.'&sort='.str_replace('_','-',$key).'&order='.((str_replace('_','-',$key)==$sort)?($order=='DESC'?'ASC':'DESC'):$order).'&op='.$op.'">'.(defined('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key)))?constant('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))):'_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))).'</a>');
@@ -155,8 +148,10 @@
 				$GLOBALS['phpdocTpl']->assign('start', $start);
 				$GLOBALS['phpdocTpl']->assign('order', $order);
 				$GLOBALS['phpdocTpl']->assign('sort', $sort);
+				$GLOBALS['phpdocTpl']->assign('op', $op);
+				$GLOBALS['phpdocTpl']->assign('fct', $fct);
 				
-				foreach (array(	'projectid','parentid','itemid','weight','status','url','md5', 'created', 'updated', 'actioned') as $id => $key) {
+				foreach (array(	'projectid','parentid','itemid','weight','status','url','md5', 'folder', 'created', 'updated', 'actioned') as $id => $key) {
 					$GLOBALS['phpdocTpl']->assign(strtolower(str_replace('-','_',$key).'_th'), '<a href="'.$_SERVER['PHP_SELF'].'?start='.$start.'&limit='.$limit.'&sort='.str_replace('_','-',$key).'&order='.((str_replace('_','-',$key)==$sort)?($order=='DESC'?'ASC':'DESC'):$order).'&op='.$op.'">'.(defined('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key)))?constant('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))):'_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))).'</a>');
 				}
 					
@@ -177,7 +172,7 @@
 			case 'file':
 
 				xoops_loadLanguage('admin', 'phpdoc');
-				phpdoc_adminMenu(3);
+				phpdoc_adminMenu(4);
 				
 				include_once $GLOBALS['xoops']->path( "/class/pagenav.php" );
 				include_once $GLOBALS['xoops']->path( "/class/template.php" );
@@ -199,9 +194,12 @@
 				$GLOBALS['phpdocTpl']->assign('start', $start);
 				$GLOBALS['phpdocTpl']->assign('order', $order);
 				$GLOBALS['phpdocTpl']->assign('sort', $sort);
+				$GLOBALS['phpdocTpl']->assign('op', $op);
+				$GLOBALS['phpdocTpl']->assign('fct', $fct);
 				
 				foreach (array(	'fileid','cid','projectid','versionid','basepathid','secondpathid','thirdpathid', 'forthpathid', 
-								'itemid', 'weight', 'path', 'filename', 'classes', 'functions', 'filemd5', 'md5', 'created', 'updated') as $id => $key) {
+								'itemid', 'weight', 'path', 'filename', 'classes', 'functions', 'filemd5', 'md5', 'created', 'updated',
+								'imported', 'filetype', 'bytes', 'extension', 'width', 'height', 'actioned') as $id => $key) {
 					$GLOBALS['phpdocTpl']->assign(strtolower(str_replace('-','_',$key).'_th'), '<a href="'.$_SERVER['PHP_SELF'].'?start='.$start.'&limit='.$limit.'&sort='.str_replace('_','-',$key).'&order='.((str_replace('_','-',$key)==$sort)?($order=='DESC'?'ASC':'DESC'):$order).'&op='.$op.'">'.(defined('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key)))?constant('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))):'_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))).'</a>');
 				}
 					
@@ -222,7 +220,7 @@
 			case 'class':
 
 				xoops_loadLanguage('admin', 'phpdoc');
-				phpdoc_adminMenu(4);
+				phpdoc_adminMenu(5);
 				
 				include_once $GLOBALS['xoops']->path( "/class/pagenav.php" );
 				include_once $GLOBALS['xoops']->path( "/class/template.php" );
@@ -241,6 +239,8 @@
 				$GLOBALS['phpdocTpl']->assign('start', $start);
 				$GLOBALS['phpdocTpl']->assign('order', $order);
 				$GLOBALS['phpdocTpl']->assign('sort', $sort);
+				$GLOBALS['phpdocTpl']->assign('op', $op);
+				$GLOBALS['phpdocTpl']->assign('fct', $fct);
 				
 				$pagenav = new XoopsPageNav($ttl, $limit, $start, 'start', 'limit='.$limit.'&sort='.$sort.'&order='.$order.'&op='.$op);
 				$GLOBALS['phpdocTpl']->assign('pagenav', $pagenav->renderNav());
@@ -267,7 +267,7 @@
 			case 'function':
 
 				xoops_loadLanguage('admin', 'phpdoc');
-				phpdoc_adminMenu(5);
+				phpdoc_adminMenu(6);
 				
 				include_once $GLOBALS['xoops']->path( "/class/pagenav.php" );
 				include_once $GLOBALS['xoops']->path( "/class/template.php" );
@@ -289,6 +289,8 @@
 				$GLOBALS['phpdocTpl']->assign('start', $start);
 				$GLOBALS['phpdocTpl']->assign('order', $order);
 				$GLOBALS['phpdocTpl']->assign('sort', $sort);
+				$GLOBALS['phpdocTpl']->assign('op', $op);
+				$GLOBALS['phpdocTpl']->assign('fct', $fct);
 				
 				foreach (array(	'functionid','cids','projectids','versionids','classids','fileids','itemid',
 								'weight', 'name', 'mode','return', 'call', 'variables', 'md5', 
@@ -313,7 +315,7 @@
 			case 'variable':
 
 				xoops_loadLanguage('admin', 'phpdoc');
-				phpdoc_adminMenu(6);
+				phpdoc_adminMenu(7);
 				
 				include_once $GLOBALS['xoops']->path( "/class/pagenav.php" );
 				include_once $GLOBALS['xoops']->path( "/class/template.php" );
@@ -335,7 +337,9 @@
 				$GLOBALS['phpdocTpl']->assign('start', $start);
 				$GLOBALS['phpdocTpl']->assign('order', $order);
 				$GLOBALS['phpdocTpl']->assign('sort', $sort);
-		
+				$GLOBALS['phpdocTpl']->assign('op', $op);
+				$GLOBALS['phpdocTpl']->assign('fct', $fct);
+				
 				foreach (array(	'variableid','cids','projectids','versionids','classids','functionids','fileids', 
 								'itemid', 'weight', 'name', 'default', 'type', 'md5', 'created', 'updated', 'actioned') as $id => $key) {
 					$GLOBALS['phpdocTpl']->assign(strtolower(str_replace('-','_',$key).'_th'), '<a href="'.$_SERVER['PHP_SELF'].'?start='.$start.'&limit='.$limit.'&sort='.str_replace('_','-',$key).'&order='.((str_replace('_','-',$key)==$sort)?($order=='DESC'?'ASC':'DESC'):$order).'&op='.$op.'">'.(defined('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key)))?constant('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))):'_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))).'</a>');
@@ -358,7 +362,7 @@
 			case 'path':
 
 				xoops_loadLanguage('admin', 'phpdoc');
-				phpdoc_adminMenu(7);
+				phpdoc_adminMenu(8);
 				
 				include_once $GLOBALS['xoops']->path( "/class/pagenav.php" );
 				include_once $GLOBALS['xoops']->path( "/class/template.php" );
@@ -380,6 +384,8 @@
 				$GLOBALS['phpdocTpl']->assign('start', $start);
 				$GLOBALS['phpdocTpl']->assign('order', $order);
 				$GLOBALS['phpdocTpl']->assign('sort', $sort);
+				$GLOBALS['phpdocTpl']->assign('op', $op);
+				$GLOBALS['phpdocTpl']->assign('fct', $fct);
 				
 				foreach (array(	'pathid','folder','path','relative','itemid','md5','created','updated','actioned') as $id => $key) {
 					$GLOBALS['phpdocTpl']->assign(strtolower(str_replace('-','_',$key).'_th'), '<a href="'.$_SERVER['PHP_SELF'].'?start='.$start.'&limit='.$limit.'&sort='.str_replace('_','-',$key).'&order='.((str_replace('_','-',$key)==$sort)?($order=='DESC'?'ASC':'DESC'):$order).'&op='.$op.'">'.(defined('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key)))?constant('_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))):'_AM_PHPDOC_TH_'.strtoupper(str_replace('-','_',$key))).'</a>');
@@ -401,7 +407,7 @@
 			case 'item_digest':
 
 				xoops_loadLanguage('admin', 'phpdoc');
-				phpdoc_adminMenu(8);
+				phpdoc_adminMenu(9);
 				
 				include_once $GLOBALS['xoops']->path( "/class/pagenav.php" );
 				include_once $GLOBALS['xoops']->path( "/class/template.php" );
@@ -423,6 +429,8 @@
 				$GLOBALS['phpdocTpl']->assign('start', $start);
 				$GLOBALS['phpdocTpl']->assign('order', $order);
 				$GLOBALS['phpdocTpl']->assign('sort', $sort);
+				$GLOBALS['phpdocTpl']->assign('op', $op);
+				$GLOBALS['phpdocTpl']->assign('fct', $fct);
 				
 				foreach (array(	'itemdigestid','itemid','cid','projectid','versionid','fileid', 
 								'menu', 'title', 'description', 'functionid', 'pathid', 'language',
@@ -447,7 +455,7 @@
 			case 'permissions':
 
 				xoops_loadLanguage('admin', 'phpdoc');
-				phpdoc_adminMenu(9);
+				phpdoc_adminMenu(10);
 				
 				break;
 		}																				

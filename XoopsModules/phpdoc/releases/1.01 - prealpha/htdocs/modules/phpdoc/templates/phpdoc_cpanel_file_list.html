@@ -1,0 +1,65 @@
+<h1><{$smarty.const._AM_PHPDOC_FILE_LIST_H1}></h1>
+<p><{$smarty.const._AM_PHPDOC_FILE_LIST_P}></p>
+<div style='clear:both; height:60px;'>
+	<div style="float:right;"><{$pagenav}></div>
+</div>
+<form action="<{$php_self}>" method="post">
+<table>
+	<tr class="head">
+		<th><{$fileid_th}></th>
+		<th><{$cid_th}></th>
+		<th><{$projectid_th}></th>
+		<th><{$versionid_th}></th>
+		<th><{$itemid_th}></th>
+		<th><{$weight_th}></th>
+		<th><{$path_th}></th>
+		<th><{$filename_th}></th>
+		<th><{$classes_th}></th>
+		<th><{$functions_th}></th>
+		<th><{$extension_th}></th>
+		<th><{$bytes_th}></th>
+		<th><{$filetype_th}></th>
+		<th><{$width_th}></th>
+		<th><{$height_th}></th>
+		<th><{$lines_th}></th>
+		<th><{$created_th}></th>
+		<th><{$updated_th}></th>
+		<th><{$actioned_th}></th>
+		<th><{$smarty.const._AM_PHPDOC_TH_ACTIONS}></th>
+	</tr>
+	<{foreach item=item from=$files}>
+	<tr class="<{cycle values="even,odd"}>">
+		<td align='center'><{$item.fileid}><{$item.forms.fileid}></td>
+		<td align='center'><{$item.forms.cid}></td>
+		<td align='center'><{$item.forms.projectid}></td>
+		<td align='center'><{$item.forms.versionid}></td>
+		<td align='center'><{$item.item.menu}></td>
+		<td align='center'><{$item.forms.weight}></td>
+		<td align='center'><{$item.path}></td>
+		<td align='center'><{$item.filename}></td>
+		<td align='center'><{$item.classes}></td>
+		<td align='center'><{$item.functions}></td>
+		<td align='center'><{$item.extension}></td>
+		<td align='center'><{$item.bytes}></td>
+		<td align='center'><{$item.forms.filetype}></td>
+		<td align='center'><{$item.width}></td>
+		<td align='center'><{$item.height}></td>
+		<td align='center'><{$item.lines}></td>
+		<td align='center'><{$item.when.created}></td>
+		<td align='center'><{$item.when.updated}></td>
+		<td align='center'><{$item.when.actioned}></td>
+		<td align='center'><a href='<{$php_self}>?id=<{$item.fileid}>&op=edit&fct=file'><{$smarty.const._EDIT}></a>&nbsp;|&nbsp;
+							<a href='<{$php_self}>?id=<{$item.fileid}>&op=delete&fct=file'><{$smarty.const._DELETE}></a></td>
+	</tr>
+	<{/foreach}>
+	<tr class="foot">
+		<td colspan="20"><input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/></td>
+	</tr>
+</table>
+<input type="hidden" name="op" value="savelist"/>
+<input type="hidden" name="fct" value="file"/>
+<input type='hidden' value="<{$limit}>" name="limit"/>
+<input type='hidden' value="<{$start}>" name="start"/>
+<input type='hidden' value="<{$order}>" name="order"/>
+<input type='hidden' value="<{$sort}>" name="sort"/>
+</form>

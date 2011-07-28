@@ -1,0 +1,42 @@
+<h1><{$smarty.const._AM_PHPDOC_CATEGORY_LIST_H1}></h1>
+<p><{$smarty.const._AM_PHPDOC_CATEGORY_LIST_P}></p>
+<div style='clear:both; height:60px;'>
+	<div style="float:right;"><{$pagenav}></div>
+</div>
+<form action="<{$php_self}>" method="post">
+<table>
+	<tr class="head">
+		<th><{$cid_th}></th>
+		<th><{$parentid_th}></th>
+		<th><{$weight_th}></th>
+		<th><{$itemid_th}></th>
+		<th><{$created_th}></th>
+		<th><{$updated_th}></th>
+		<th><{$smarty.const._AM_PHPDOC_TH_ACTIONS}></th>
+	</tr>
+	<{foreach item=item from=$categories}>
+	<tr class="<{cycle values="even,odd"}>">
+		<td align='center'><{$item.cid}><{$item.forms.cid}></td>
+		<td align='center'><{$item.forms.parentid}></td>
+		<td align='center'><{$item.forms.weight}></td>
+		<td align='center'><{$item.item.menu}></td>
+		<td align='center'><{$item.when.created}></td>
+		<td align='center'><{$item.when.updated}></td>
+		<td align='center'><a href='<{$php_self}>?id=<{$item.cid}>&op=edit&fct=category'><{$smarty.const._EDIT}></a>&nbsp;|&nbsp;
+							<a href='<{$php_self}>?id=<{$item.cid}>&op=delete&fct=category'><{$smarty.const._DELETE}></a></td>
+	</tr>
+	<{/foreach}>
+	<tr class="foot">
+		<td colspan="7"><input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/></td>
+	</tr>
+</table>
+<input type="hidden" name="op" value="savelist"/>
+<input type="hidden" name="fct" value="category"/>
+<input type='hidden' value="<{$limit}>" name="limit"/>
+<input type='hidden' value="<{$start}>" name="start"/>
+<input type='hidden' value="<{$order}>" name="order"/>
+<input type='hidden' value="<{$sort}>" name="sort"/>
+</form>
+<h1><{$smarty.const._AM_PHPDOC_CATEGORY_NEW_H1}></h1>
+<p><{$smarty.const._AM_PHPDOC_CATEGORY_NEW_P}></p>
+<{$form}>
