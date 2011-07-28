@@ -111,7 +111,19 @@ $modversion['templates'][10]['description'] = '';
 $i = 0;
 $modversion['hasMain'] = 1;
 
-$i = 0;
+xoops_load('XoopsEditorHandler');
+$editor_handler = XoopsEditorHandler::getInstance();
+foreach ($editor_handler->getList(false) as $id => $val)
+	$options[$val] = $id;
+	
+$i++;
+$modversion['config'][$i]['name'] = 'editor';
+$modversion['config'][$i]['title'] = "_MI_PHPDOC_EDITOR";
+$modversion['config'][$i]['description'] = "_MI_PHPDOC_EDITOR_DESC";
+$modversion['config'][$i]['formtype'] = 'select';
+$modversion['config'][$i]['valuetype'] = 'text';
+$modversion['config'][$i]['default'] = 'tinymce';
+$modversion['config'][$i]['options'] = $options;
 
 $i++;
 $modversion['config'][$i]['name'] = 'projects_path';

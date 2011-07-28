@@ -128,6 +128,8 @@
 	define('_MI_PHPDOC_ENDOFURLRSS_DESC', 'End of RSS Content URL for SEO with .htaccess');
 	define('_MI_PHPDOC_ENDOFURLPDF', 'SEO End of PDF URL');
 	define('_MI_PHPDOC_ENDOFURLPDF_DESC', 'End of PDF Content URL for SEO with .htaccess');
+	define('_MI_PHPDOC_EDITOR', 'Editor to use');
+	define('_MI_PHPDOC_EDITOR_DESC', 'This is the editor that will be use');
 	
 	// Form Variables
 	define('_MI_PHPDOC_NONE', 'None');

@@ -13,7 +13,7 @@ class PhpdocIndex extends XoopsObject
         $this->initVar('cid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('projectid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('versionid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('fileids', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('fileid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('classid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('functionid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('itemid', XOBJ_DTYPE_INT, 0, false);
@@ -28,6 +28,82 @@ class PhpdocIndex extends XoopsObject
 		$this->initVar('created', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('updated', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('actioned', XOBJ_DTYPE_INT, 0, false);
+	}
+	
+	function toArray()
+	{
+		$ret = parent::toArray();
+		$ret['when'] = get_when_associative($this);
+		$frm = $this->getForm($_SERVER['QUERY_STRING'], false, array());
+		foreach($frm as $key => $value) { 
+			if ($key!='required') {
+				$ret['forms'][$key] = $frm[$key]->render();
+			}
+		}
+		return $ret;
+	}
+	
+	function getForm($querystring = '', $caption = true, $frm = false) {
+		if ($frm==false)
+			$frm=array();
+				
+		xoops_loadLanguage('forms', 'phpdoc');
+		$item_digest_handler = xoops_getmodulehandler('item_digest', 'phpdoc');
+		$id = $this->getVar('id');
+		
+		switch ($caption){
+			case true:
+				$frm['id'] = new XoopsFormHidden('id['.$id.']', 'file');
+				$frm['cid'] = new XoopsFormSelectCategory(_FRM_PHPDOC_CATEGORY, $id.'[cid]', $this->getVar('cid'));
+				$frm['projectid'] = new XoopsFormSelectProject(_FRM_PHPDOC_PROJECT, $id.'[projectid]', $this->getVar('projectid'));
+				$frm['versionid'] = new XoopsFormSelectVersion(_FRM_PHPDOC_VERSION, $id.'[versionid]', $this->getVar('versionid'));
+				$frm['fileid'] = new XoopsFormSelectFile(_FRM_PHPDOC_FILE, $id.'[fileid]', $this->getVar('fileid'));
+				$frm['classid'] = new XoopsFormSelectClass(_FRM_PHPDOC_CLASS, $id.'[classid]', $this->getVar('classid'));
+				$frm['functionid'] = new XoopsFormSelectFile(_FRM_PHPDOC_FUNCTION, $id.'[functionid]', $this->getVar('functionid'));
+				$frm['itemid'] = new XoopsFormHidden($id.'[itemid]', $this->getVar('itemid'));
+				$frm = $item_digest_handler->getForm($this->getVar('itemid'), (isset($_GET['language'])?$_GET['language']:$GLOBALS['xoopsConfig']['language']), $querystring, $caption, $frm);
+				$frm['weight'] = new XoopsFormText(_FRM_PHPDOC_WEIGHT, $id.'[weight]', 5, 10, $this->getVar('weight'));
+				$frm['status'] = new XoopsFormSelectStatus(_FRM_PHPDOC_STATUS, $id.'[status]', $this->getVar('status'));
+				$frm['mode'] = new XoopsFormSelectMode(_FRM_PHPDOC_MODE, $id.'[mode]', $this->getVar('mode'));
+				$frm['visible'] = new XoopsFormRadioYN(_FRM_PHPDOC_VISIBLE, $id.'[visible]', $this->getVar('visible'));
+				$frm['comments'] = new XoopsFormRadioYN(_FRM_PHPDOC_COMMENTS, $id.'[comments]', $this->getVar('comments'));
+				break;
+			case false:
+				$frm['id'] = new XoopsFormHidden('id['.$id.']', 'file');
+				$frm['cid'] = new XoopsFormSelectCategory('', $id.'[cid]', $this->getVar('cid'));
+				$frm['projectid'] = new XoopsFormSelectProject('', $id.'[projectid]', $this->getVar('projectid'));
+				$frm['versionid'] = new XoopsFormSelectVersion('', $id.'[versionid]', $this->getVar('versionid'));
+				$frm['fileid'] = new XoopsFormSelectFile('', $id.'[fileid]', $this->getVar('fileid'));
+				$frm['classid'] = new XoopsFormSelectClass('', $id.'[classid]', $this->getVar('classid'));
+				$frm['functionid'] = new XoopsFormSelectFile('', $id.'[functionid]', $this->getVar('functionid'));
+				$frm['itemid'] = new XoopsFormHidden($id.'[itemid]', $this->getVar('itemid'));
+				$frm = $item_digest_handler->getForm($this->getVar('itemid'), (isset($_GET['language'])?$_GET['language']:$GLOBALS['xoopsConfig']['language']), $querystring, $caption, $frm);
+				$frm['weight'] = new XoopsFormText('', $id.'[weight]', 5, 10, $this->getVar('weight'));
+				$frm['status'] = new XoopsFormSelectStatus('', $id.'[status]', $this->getVar('status'));
+				$frm['mode'] = new XoopsFormSelectMode('', $id.'[mode]', $this->getVar('mode'));
+				$frm['visible'] = new XoopsFormRadioYN('', $id.'[visible]', $this->getVar('visible'));
+				$frm['comments'] = new XoopsFormRadioYN('', $id.'[comments]', $this->getVar('comments'));
+				return $frm;			
+				break;				
+		}
+
+	    if ($this->isNew()) {
+    		$form = new XoopsThemeForm(_FRM_PHPDOC_NEW_INDEX, 'index', $_SERVER['PHP_SELF'], 'post');
+    	} else {
+    		$form = new XoopsThemeForm(_FRM_PHPDOC_EDIT_INDEX, 'index', $_SERVER['PHP_SELF'], 'post');
+    	}
+    	
+    	foreach($frm as $key => $value) {
+    		if ($key!='required') {
+	    		if (!in_array($field, $frm['required'])) {
+	    			$form->addElement($frm[$key], false);
+	    		} else {
+	    			$form->addElement($frm[$key], true);
+	    		}
+    		}
+    	}
+		
+    	return $form->render();
 	}
 	
 	function getPluginName() {
