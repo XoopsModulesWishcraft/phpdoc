@@ -29,6 +29,78 @@ class PhpdocFunction extends XoopsObject
 		$this->initVar('actioned', XOBJ_DTYPE_INT, 0, false);
 	}
 	
+	function toArray()
+	{
+		$ret = parent::toArray();
+		$ret['when'] = get_when_associative($this);
+		$frm = $this->getForm($_SERVER['QUERY_STRING'], false, array());
+		foreach($frm as $key => $value) { 
+			if ($key!='required') {
+				$ret['forms'][$key] = $frm[$key]->render();
+			}
+		}
+		return $ret;
+	}
+	
+	function getForm($querystring = '', $caption = true, $frm = false) {
+		if ($frm==false)
+			$frm=array();
+				
+		xoops_loadLanguage('forms', 'phpdoc');
+		$item_digest_handler = xoops_getmodulehandler('item_digest', 'phpdoc');
+		$id = $this->getVar('functionid');
+		
+		switch ($caption){
+			case true:
+				$frm['functionid'] = new XoopsFormHidden('id['.$id.']', 'file');
+				$frm['cids'] = new XoopsFormSelectCategory(_FRM_PHPDOC_CATEGORIES, $id.'[cids]', $this->getVar('cids'), 5, true);
+				$frm['projectids'] = new XoopsFormSelectProject(_FRM_PHPDOC_PROJECTS, $id.'[projectids]', $this->getVar('projectids'), 5, true);
+				$frm['versionids'] = new XoopsFormSelectVersion(_FRM_PHPDOC_VERSIONS, $id.'[versionids]', $this->getVar('versionids'), 5, true);
+				$frm['classids'] = new XoopsFormSelectClass(_FRM_PHPDOC_CLASSES, $id.'[classids]', $this->getVar('classids'), 5, true);
+				$frm['fileids'] = new XoopsFormSelectFile(_FRM_PHPDOC_FILES, $id.'[fileids]', $this->getVar('fileids'), 5, true);
+				$frm['itemid'] = new XoopsFormHidden($id.'[itemid]', $this->getVar('itemid'));
+				$frm = $item_digest_handler->getForm($this->getVar('itemid'), (isset($_GET['language'])?$_GET['language']:$GLOBALS['xoopsConfig']['language']), $querystring, $caption, $frm);
+				$frm['weight'] = new XoopsFormText(_FRM_PHPDOC_WEIGHT, $id.'[weight]', 5, 10, $this->getVar('weight'));
+				$frm['name'] = new XoopsFormText(_FRM_PHPDOC_NAME, $id.'[name]', 35, 128, $this->getVar('name'));
+				$frm['mode'] = new XoopsFormSelectMode(_FRM_PHPDOC_MODE, $id.'[mode]', $this->getVar('mode'));
+				$frm['return'] = new XoopsFormSelectReturn(_FRM_PHPDOC_RETURN, $id.'[return]', $this->getVar('return'));
+				break;
+			case false:
+				$frm['functionid'] = new XoopsFormHidden('id['.$id.']', 'file');
+				$frm['cids'] = new XoopsFormSelectCategory('', $id.'[cids]', $this->getVar('cids'), 5, true);
+				$frm['projectids'] = new XoopsFormSelectProject('', $id.'[projectids]', $this->getVar('projectids'), 5, true);
+				$frm['versionids'] = new XoopsFormSelectVersion('', $id.'[versionids]', $this->getVar('versionids'), 5, true);
+				$frm['classids'] = new XoopsFormSelectClass('', $id.'[classids]', $this->getVar('classids'), 5, true);
+				$frm['fileids'] = new XoopsFormSelectFile('', $id.'[fileids]', $this->getVar('fileids'), 5, true);
+				$frm['itemid'] = new XoopsFormHidden($id.'[itemid]', $this->getVar('itemid'));
+				$frm = $item_digest_handler->getForm($this->getVar('itemid'), (isset($_GET['language'])?$_GET['language']:$GLOBALS['xoopsConfig']['language']), $querystring, $caption, $frm);
+				$frm['weight'] = new XoopsFormText('', $id.'[weight]', 5, 10, $this->getVar('weight'));
+				$frm['name'] = new XoopsFormText('', $id.'[name]', 35, 128, $this->getVar('name'));
+				$frm['mode'] = new XoopsFormSelectMode('', $id.'[mode]', $this->getVar('mode'));
+				$frm['return'] = new XoopsFormSelectReturn('', $id.'[return]', $this->getVar('return'));
+				return $frm;			
+				break;				
+		}
+
+	    if ($this->isNew()) {
+    		$form = new XoopsThemeForm(_FRM_PHPDOC_NEW_FUNCTION, 'function', $_SERVER['PHP_SELF'], 'post');
+    	} else {
+    		$form = new XoopsThemeForm(_FRM_PHPDOC_EDIT_FUNCTION, 'function', $_SERVER['PHP_SELF'], 'post');
+    	}
+    	
+    	foreach($frm as $key => $value) {
+    		if ($key!='required') {
+	    		if (!in_array($field, $frm['required'])) {
+	    			$form->addElement($frm[$key], false);
+	    		} else {
+	    			$form->addElement($frm[$key], true);
+	    		}
+    		}
+    	}
+		
+    	return $form->render();
+	}
+	
 	function getPluginName() {
 		$ret = '';
 		if (defined($this->getVar('mode').'_PLUGIN'))

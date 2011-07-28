@@ -27,6 +27,87 @@ class PhpdocVersion extends XoopsObject
 		$this->initVar('actioned', XOBJ_DTYPE_INT, 0, false);		
 	}
 	
+		function toArray()
+	{
+		$ret = parent::toArray();
+		$ret['when'] = get_when_associative($this);
+		$frm = $this->getForm($_SERVER['QUERY_STRING'], false, array());
+		foreach($frm as $key => $value) { 
+			if ($key!='required') {
+				$ret['forms'][$key] = $frm[$key]->render();
+			}
+		}
+		return $ret;
+	}
+	
+	function getForm($querystring = '', $caption = true, $frm = false, $render=true) {
+		if ($frm==false)
+			$frm=array();
+
+		$frm['required'][] = 'major';
+		$frm['required'][] = 'minor';
+		$frm['required'][] = 'revision';
+				
+		xoops_loadLanguage('forms', 'phpdoc');
+		$item_digest_handler = xoops_getmodulehandler('item_digest', 'phpdoc');
+		$id = $this->getVar('versionid');
+		
+		switch ($caption){
+			case true:
+				$frm['versionid'] = new XoopsFormHidden('id['.$id.']', 'version');
+				$frm['cid'] = new XoopsFormSelectCategory(_FRM_PHPDOC_CATEGORY, $id.'[cid]', $this->getVar('cid'));
+				$frm['projectid'] = new XoopsFormSelectProject(_FRM_PHPDOC_PROJECT, $id.'[projectid]', $this->getVar('projectid'));
+				$frm['weight'] = new XoopsFormText(_FRM_PHPDOC_WEIGHT, $id.'[weight]', 5, 15, $this->getVar('weight'));
+				$frm['status'] = new XoopsFormSelectStatus(_FRM_PHPDOC_STATUS, $id.'[status]', $this->getVar('status'));
+				$frm['itemid'] = new XoopsFormHidden($id.'[itemid]', $this->getVar('itemid'));
+				$frm = $item_digest_handler->getForm($this->getVar('itemid'), (isset($_GET['language'])?$_GET['language']:$GLOBALS['xoopsConfig']['language']), $querystring, $caption, $frm);			
+				$frm['supporturl'] = new XoopsFormText(_FRM_PHPDOC_SUPPORTURL, $id.'[supporturl]', 35, 255, $this->getVar('supporturl'));
+				$frm['downloadurl'] = new XoopsFormText(_FRM_PHPDOC_DOWNLOADURL, $id.'[downloadurl]', 35, 255, $this->getVar('downloadurl'));
+				$frm['repourl'] = new XoopsFormText(_FRM_PHPDOC_REPOURL, $id.'[repourl]', 35, 255, $this->getVar('repourl'));
+				$frm['major'] = new XoopsFormText(_FRM_PHPDOC_MAJOR, $id.'[major]', 5, 5, $this->getVar('major'));
+				$frm['minor'] = new XoopsFormText(_FRM_PHPDOC_MINOR, $id.'[minor]', 5, 5, $this->getVar('minor'));
+				$frm['revision'] = new XoopsFormText(_FRM_PHPDOC_REVISION, $id.'[revision]', 5, 5, $this->getVar('revision'));
+				if ($render==false)
+					return $frm;
+				break;
+			case false:
+				$frm['versionid'] = new XoopsFormHidden('id['.$id.']', 'version');
+				$frm['cid'] = new XoopsFormSelectCategory('', $id.'[cid]', $this->getVar('cid'));
+				$frm['projectid'] = new XoopsFormSelectProject('', $id.'[projectid]', $this->getVar('projectid'));
+				$frm['weight'] = new XoopsFormText('', $id.'[weight]', 5, 15, $this->getVar('weight'));
+				$frm['status'] = new XoopsFormSelectStatus('', $id.'[status]', $this->getVar('status'));
+				$frm['itemid'] = new XoopsFormHidden($id.'[itemid]', $this->getVar('itemid'));
+				$frm = $item_digest_handler->getForm($this->getVar('itemid'), (isset($_GET['language'])?$_GET['language']:$GLOBALS['xoopsConfig']['language']), $querystring, $caption, $frm);			
+				$frm['supporturl'] = new XoopsFormText('', $id.'[supporturl]', 35, 255, $this->getVar('supporturl'));
+				$frm['downloadurl'] = new XoopsFormText('', $id.'[downloadurl]', 35, 255, $this->getVar('downloadurl'));
+				$frm['repourl'] = new XoopsFormText('', $id.'[repourl]', 35, 255, $this->getVar('repourl'));
+				$frm['major'] = new XoopsFormText('', $id.'[major]', 5, 5, $this->getVar('major'));
+				$frm['minor'] = new XoopsFormText('', $id.'[minor]', 5, 5, $this->getVar('minor'));
+				$frm['revision'] = new XoopsFormText('', $id.'[revision]', 5, 5, $this->getVar('revision'));
+				return $frm;			
+				break;				
+		}
+
+	    if ($this->isNew()) {
+    		$form = new XoopsThemeForm(_FRM_PHPDOC_NEW_VERSION, 'version', $_SERVER['PHP_SELF'], 'post');
+    	} else {
+    		$form = new XoopsThemeForm(_FRM_PHPDOC_EDIT_VERSION, 'version', $_SERVER['PHP_SELF'], 'post');
+    	}
+    	
+    	foreach($frm as $key => $value) {
+    		if ($key!='required') {
+	    		if (!in_array($field, $frm['required'])) {
+	    			$form->addElement($frm[$key], false);
+	    		} else {
+	    			$form->addElement($frm[$key], true);
+	    		}
+    		}
+    	}
+		
+    	return $form->render();
+	}
+	
+	
 	function getPluginName() {
 		$ret = '';
 		if (defined($this->getVar('status').'_PLUGIN'))
