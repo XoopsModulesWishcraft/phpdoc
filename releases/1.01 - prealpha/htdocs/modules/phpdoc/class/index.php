@@ -43,7 +43,7 @@ class PhpdocIndex extends XoopsObject
 		return $ret;
 	}
 	
-	function getForm($querystring = '', $caption = true, $frm = false) {
+	function getForm($querystring = '', $caption = true, $frm = false, $render=true) {
 		if ($frm==false)
 			$frm=array();
 				
@@ -67,6 +67,8 @@ class PhpdocIndex extends XoopsObject
 				$frm['mode'] = new XoopsFormSelectMode(_FRM_PHPDOC_MODE, $id.'[mode]', $this->getVar('mode'));
 				$frm['visible'] = new XoopsFormRadioYN(_FRM_PHPDOC_VISIBLE, $id.'[visible]', $this->getVar('visible'));
 				$frm['comments'] = new XoopsFormRadioYN(_FRM_PHPDOC_COMMENTS, $id.'[comments]', $this->getVar('comments'));
+				if ($render==false)
+					return $frm;
 				break;
 			case false:
 				$frm['id'] = new XoopsFormHidden('id['.$id.']', 'file');

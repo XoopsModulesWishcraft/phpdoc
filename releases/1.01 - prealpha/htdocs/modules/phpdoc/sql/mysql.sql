@@ -3,7 +3,7 @@ CREATE TABLE `phpdoc_categories` (
   `cid` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `parentid` int(12) unsigned DEFAULT '0',
   `weight` int(4) unsigned DEFAULT '1',
-  `itemid` int(12) unsigned DEFAULT '0',
+  `itemid` INT(16) unsigned DEFAULT '0',
   `md5` varchar(32) DEFAULT NULL,
   `created` int(12) DEFAULT '0',
   `updated` int(12) DEFAULT '0',
@@ -58,6 +58,43 @@ CREATE TABLE `phpdoc_files` (
   PRIMARY KEY (`fileid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `phpdoc_filestypes` (
+  `filetypeid` int(12) unsigned NOT NULL AUTO_INCREMENT,
+  `filetype` enum('_MI_PHPDOC_FILETYPE_PHP','_MI_PHPDOC_FILETYPE_CSS','_MI_PHPDOC_FILETYPE_HTML','_MI_PHPDOC_FILETYPE_JAVA','_MI_PHPDOC_FILETYPE_TXT','_MI_PHPDOC_FILETYPE_IMAGE','_MI_PHPDOC_FILETYPE_ASSET','_MI_PHPDOC_FILETYPE_OTHER') DEFAULT '_MI_PHPDOC_FILETYPE_OTHER',
+  `extension` varchar(20) DEFAULT 'php',
+  `md5` varchar(32) DEFAULT NULL,
+  `created` int(12) unsigned DEFAULT '0',
+  `updated` int(12) unsigned DEFAULT '0',
+  `actioned` int(12) unsigned DEFAULT '0',
+  PRIMARY KEY (`filetypeid`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (1,'_MI_PHPDOC_FILETYPE_PHP','php',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (2,'_MI_PHPDOC_FILETYPE_PHP','php4',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (3,'_MI_PHPDOC_FILETYPE_PHP','php3',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (4,'_MI_PHPDOC_FILETYPE_TXT','sql',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (5,'_MI_PHPDOC_FILETYPE_TXT','txt',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (6,'_MI_PHPDOC_FILETYPE_TXT','htaccess',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (7,'_MI_PHPDOC_FILETYPE_TXT','dist',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (8,'_MI_PHPDOC_FILETYPE_JAVA','java',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (9,'_MI_PHPDOC_FILETYPE_JAVA','js',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (10,'_MI_PHPDOC_FILETYPE_CSS','css',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (11,'_MI_PHPDOC_FILETYPE_HTML','html',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (12,'_MI_PHPDOC_FILETYPE_HTML','htm',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (13,'_MI_PHPDOC_FILETYPE_HTML','xhtml',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (14,'_MI_PHPDOC_FILETYPE_IMAGE','jpg',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (15,'_MI_PHPDOC_FILETYPE_IMAGE','jpeg',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (16,'_MI_PHPDOC_FILETYPE_IMAGE','gif',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (17,'_MI_PHPDOC_FILETYPE_IMAGE','tif',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (18,'_MI_PHPDOC_FILETYPE_IMAGE','png',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (19,'_MI_PHPDOC_FILETYPE_IMAGE','ico',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (20,'_MI_PHPDOC_FILETYPE_ASSET','pdf',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (21,'_MI_PHPDOC_FILETYPE_ASSET','doc',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (22,'_MI_PHPDOC_FILETYPE_ASSET','docx',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (23,'_MI_PHPDOC_FILETYPE_ASSET','xml',NULL,0,0,0);
+insert  into `phpdoc_filestypes` (`filetypeid`,`filetype`,`extension`,`md5`,`created`,`updated`,`actioned`) values (24,'_MI_PHPDOC_FILETYPE_TXT','csv',NULL,0,0,0);
+
+
 CREATE TABLE `phpdoc_functions` (
   `functionid` int(16) unsigned NOT NULL AUTO_INCREMENT,
   `cids` varchar(1000) DEFAULT NULL,
@@ -87,7 +124,7 @@ CREATE TABLE `phpdoc_index` (
   `fileid` int(16) unsigned DEFAULT '0',
   `classid` int(16) unsigned DEFAULT '0',
   `functionid` int(16) unsigned DEFAULT '0',
-  `itemid` int(12) unsigned DEFAULT '0',
+  `itemid` INT(16) unsigned DEFAULT '0',
   `weight` int(4) unsigned DEFAULT '1',
   `status` enum('_MI_PHPDOC_STATUS_ALPHA','_MI_PHPDOC_STATUS_BETA','_MI_PHPDOC_STATUS_RC','_MI_PHPDOC_STATUS_STABLE','_MI_PHPDOC_STATUS_MATURE','_MI_PHPDOC_STATUS_EXPERIMENTAL') DEFAULT '_MI_PHPDOC_STATUS_STABLE',
   `mode` enum('_MI_PHPDOC_MODE_PUBLIC','_MI_PHPDOC_MODE_PRIVATE','_MI_PHPDOC_MODE_PROTECTED') DEFAULT '_MI_PHPDOC_MODE_PUBLIC',
@@ -136,10 +173,11 @@ CREATE TABLE `phpdoc_items_digest` (
 
 CREATE TABLE `phpdoc_paths` (
   `pathid` INT(12) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `parentid` INT(12) UNSIGNED DEFAULT NULL,
   `folder` VARCHAR(128) DEFAULT NULL,
   `path` VARCHAR(500) DEFAULT NULL,
   `relative` ENUM('_MI_PHPDOC_XOOPS_ROOT_PATH','_MI_PHPDOC_XOOPS_UPLOAD_PATH','_MI_PHPDOC_XOOPS_VAR_PATH','_MI_PHPDOC_XOOPS_TRUST_PATH','_MI_PHPDOC_XOOPS_MODULE_PATH','_MI_PHPDOC_PROJECTS_PATH','_MI_PHPDOC_OPEN_PATH') DEFAULT '_MI_PHPDOC_PROJECTS_PATH',
-  `itemid` INT(12) UNSIGNED DEFAULT NULL,
+  `itemid` INT(16) UNSIGNED DEFAULT NULL,
   `md5` VARCHAR(32) DEFAULT NULL,
   `created` INT(12) UNSIGNED DEFAULT '0',
   `updated` INT(12) UNSIGNED DEFAULT '0',

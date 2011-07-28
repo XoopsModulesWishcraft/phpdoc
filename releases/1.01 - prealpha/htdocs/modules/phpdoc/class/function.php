@@ -42,7 +42,7 @@ class PhpdocFunction extends XoopsObject
 		return $ret;
 	}
 	
-	function getForm($querystring = '', $caption = true, $frm = false) {
+	function getForm($querystring = '', $caption = true, $frm = false, $render=true) {
 		if ($frm==false)
 			$frm=array();
 				
@@ -64,6 +64,8 @@ class PhpdocFunction extends XoopsObject
 				$frm['name'] = new XoopsFormText(_FRM_PHPDOC_NAME, $id.'[name]', 35, 128, $this->getVar('name'));
 				$frm['mode'] = new XoopsFormSelectMode(_FRM_PHPDOC_MODE, $id.'[mode]', $this->getVar('mode'));
 				$frm['return'] = new XoopsFormSelectReturn(_FRM_PHPDOC_RETURN, $id.'[return]', $this->getVar('return'));
+				if ($render==false)
+					return $frm;
 				break;
 			case false:
 				$frm['functionid'] = new XoopsFormHidden('id['.$id.']', 'file');

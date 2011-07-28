@@ -1,11 +1,31 @@
 <?php
-function filter_querystring($string, $element) {
-	foreach(explode('&', $string) as $component) {
-		$value = explode('=', $component);
-		if (strtolower($value[0])!=strtolower($element))
-			$ret[] = $component;
+if (!function_exists("filter_querystring")) {
+	function filter_querystring($string, $element) {
+		foreach(explode('&', $string) as $component) {
+			$value = explode('=', $component);
+			if (strtolower($value[0])!=strtolower($element))
+				$ret[] = $component;
+		}
+		return implode('&', $ret);
 	}
-	return implode('&', $ret);
+}
+
+if (!function_exists("get_when_associative")) {
+	function get_when_associative($object) {
+		if ($object->getVar('created')==0)
+			$ret['created'] = '';
+		else 
+			$ret['created'] = date(_DATESTRING, $object->getVar('created'));
+		if ($object->getVar('updated')==0)
+			$ret['updated'] = '';
+		else 
+			$ret['updated'] = date(_DATESTRING, $object->getVar('updated'));
+		if ($object->getVar('actioned')==0)
+			$ret['actioned'] = '';
+		else 
+			$ret['actioned'] = date(_DATESTRING, $object->getVar('actioned'));
+		return $ret;
+	}
 }
 
 if (!function_exists("phpdoc_adminMenu")) {

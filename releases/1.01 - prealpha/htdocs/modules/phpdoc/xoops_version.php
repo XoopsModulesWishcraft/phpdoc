@@ -84,6 +84,7 @@ $modversion['tables'][7] = "phpdoc_paths";
 $modversion['tables'][8] = "phpdoc_projects";
 $modversion['tables'][9] = "phpdoc_variables";
 $modversion['tables'][10] = "phpdoc_versions";
+$modversion['tables'][11] = "phpdoc_filestypes";
 
 // Templates
 $modversion['templates'][1]['file'] = 'phpdoc_cpanel_category_list.html';
@@ -106,6 +107,8 @@ $modversion['templates'][9]['file'] = 'phpdoc_cpanel_edit.html';
 $modversion['templates'][9]['description'] = '';
 $modversion['templates'][10]['file'] = 'phpdoc_cpanel_permissions.html';
 $modversion['templates'][10]['description'] = '';
+$modversion['templates'][11]['file'] = 'phpdoc_cpanel_filetype_list.html';
+$modversion['templates'][11]['description'] = '';
 
 // Menu
 $i = 0;
