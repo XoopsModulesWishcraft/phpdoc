@@ -52,6 +52,15 @@
 	define('_MI_PHPDOC_PROJECTS_PATH', 'Projects Folder');
 	define('_MI_PHPDOC_OPEN_PATH', 'Open Path');
 	
+	define('_MI_PHPDOC_FILETYPE_PHP', 'PHP File');
+	define('_MI_PHPDOC_FILETYPE_CSS', 'Stylesheet');
+	define('_MI_PHPDOC_FILETYPE_HTML', 'HTML File');
+	define('_MI_PHPDOC_FILETYPE_JAVA', 'Javascript File');
+	define('_MI_PHPDOC_FILETYPE_TXT', 'Text File');
+	define('_MI_PHPDOC_FILETYPE_IMAGE', 'Image');
+	define('_MI_PHPDOC_FILETYPE_ASSET', 'Asset File');
+	define('_MI_PHPDOC_FILETYPE_OTHER', 'Other File');
+	
 	// Plug-in ACL
 	define('_MI_PHPDOC_MODE_PUBLIC_PLUGIN', 'Public');
 	define('_MI_PHPDOC_MODE_PRIVATE_PLUGIN', 'Private');
@@ -92,6 +101,15 @@
 	define('_MI_PHPDOC_PROJECTS_PATH_PLUGIN', 'ProjectsPath');
 	define('_MI_PHPDOC_OPEN_PATH_PLUGIN', 'OpenPath');
 	
+	define('_MI_PHPDOC_FILETYPE_PHP_PLUGIN', 'PHP');
+	define('_MI_PHPDOC_FILETYPE_CSS_PLUGIN', 'Stylesheet');
+	define('_MI_PHPDOC_FILETYPE_HTML_PLUGIN', 'HTML');
+	define('_MI_PHPDOC_FILETYPE_JAVA_PLUGIN', 'Javascript');
+	define('_MI_PHPDOC_FILETYPE_TXT_PLUGIN', 'Text');
+	define('_MI_PHPDOC_FILETYPE_IMAGE_PLUGIN', 'Image');
+	define('_MI_PHPDOC_FILETYPE_ASSET_PLUGIN', 'Asset');
+	define('_MI_PHPDOC_FILETYPE_OTHER_PLUGIN', 'Other');
+	
 	// XOOPS Version
 	define('_MI_PHPDOC_NAME', 'PHP Documentor');
 	define('_MI_PHPDOC_DESCRIPTION', 'PHP Documentor is a module for XOOPS which will import your PHP Code in projects and allow it to be documented!');
@@ -111,4 +129,6 @@
 	define('_MI_PHPDOC_ENDOFURLPDF', 'SEO End of PDF URL');
 	define('_MI_PHPDOC_ENDOFURLPDF_DESC', 'End of PDF Content URL for SEO with .htaccess');
 	
+	// Form Variables
+	define('_MI_PHPDOC_NONE', 'None');
 ?>

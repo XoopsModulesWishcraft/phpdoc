@@ -1,0 +1,57 @@
+<h1><{$smarty.const._AM_PHPDOC_FUNCTION_LIST_H1}></h1>
+<p><{$smarty.const._AM_PHPDOC_FUNCTION_LIST_P}></p>
+<div style='clear:both; height:60px;'>
+	<div style="float:right;"><{$pagenav}></div>
+</div>
+<form action="<{$php_self}>" method="post">
+<table>
+	<tr class="head">
+		<th><{$functionid_th}></th>
+		<th><{$cids_th}></th>
+		<th><{$projectids_th}></th>
+		<th><{$versionids_th}></th>
+		<th><{$classids_th}></th>
+		<th><{$fileids_th}></th>
+		<th><{$itemid_th}></th>
+		<th><{$weight_th}></th>
+		<th><{$name_th}></th>
+		<th><{$mode_th}></th>
+		<th><{$return_th}></th>
+		<th><{$variables_th}></th>
+		<th><{$created_th}></th>
+		<th><{$updated_th}></th>
+		<th><{$actioned_th}></th>
+		<th><{$smarty.const._AM_PHPDOC_TH_ACTIONS}></th>
+	</tr>
+	<{foreach item=item from=$functions}>
+	<tr class="<{cycle values="even,odd"}>">
+		<td align='center'><{$item.functionid}><{$item.forms.functionid}></td>
+		<td align='center'><{$item.forms.cids}></td>
+		<td align='center'><{$item.forms.projectids}></td>
+		<td align='center'><{$item.forms.versionids}></td>
+		<td align='center'><{$item.forms.classids}></td>
+		<td align='center'><{$item.forms.fileids}></td>
+		<td align='center'><{$item.item.menu}></td>
+		<td align='center'><{$item.forms.weight}></td>
+		<td align='center'><{$item.forms.name}></td>
+		<td align='center'><{$item.forms.mode}></td>
+		<td align='center'><{$item.forms.return}></td>
+		<td align='center'><{$item.variables}></td>
+		<td align='center'><{$item.when.created}></td>
+		<td align='center'><{$item.when.updated}></td>
+		<td align='center'><{$item.when.actioned}></td>
+		<td align='center'><a href='<{$php_self}>?id=<{$item.functionid}>&op=edit&fct=function'><{$smarty.const._EDIT}></a>&nbsp;|&nbsp;
+							<a href='<{$php_self}>?id=<{$item.functionid}>&op=delete&fct=function'><{$smarty.const._DELETE}></a></td>
+	</tr>
+	<{/foreach}>
+	<tr class="foot">
+		<td colspan="16"><input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/></td>
+	</tr>
+</table>
+<input type="hidden" name="op" value="savelist"/>
+<input type="hidden" name="fct" value="function"/>
+<input type='hidden' value="<{$limit}>" name="limit"/>
+<input type='hidden' value="<{$start}>" name="start"/>
+<input type='hidden' value="<{$order}>" name="order"/>
+<input type='hidden' value="<{$sort}>" name="sort"/>
+</form>

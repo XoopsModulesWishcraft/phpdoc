@@ -43,10 +43,18 @@ CREATE TABLE `phpdoc_files` (
   `filename` varchar(255) DEFAULT NULL,
   `classes` int(8) unsigned DEFAULT '0',
   `functions` int(8) unsigned DEFAULT '0',
+  `imported` int(12) unsigned DEFAULT '0',
+  `filetype` enum('_MI_PHPDOC_FILETYPE_PHP', '_MI_PHPDOC_FILETYPE_CSS', '_MI_PHPDOC_FILETYPE_HTML', '_MI_PHPDOC_FILETYPE_JAVA', '_MI_PHPDOC_FILETYPE_TXT', '_MI_PHPDOC_FILETYPE_IMAGE', '_MI_PHPDOC_FILETYPE_ASSET', '_MI_PHPDOC_FILETYPE_OTHER') DEFAULT '_MI_PHPDOC_FILETYPE_OTHER',
+  `bytes` int(12) unsigned DEFAULT '0',
+  `extension` varchar(20) DEFAULT 'php',
+  `width` int(12) unsigned DEFAULT '0',
+  `height` int(12) unsigned DEFAULT '0',
+  `lines` int(12) unsigned DEFAULT '0',
   `filemd5` varchar(32) DEFAULT NULL,
   `md5` varchar(32) DEFAULT NULL,
   `created` int(12) unsigned DEFAULT '0',
   `updated` int(12) unsigned DEFAULT '0',
+  `actioned` int(12) unsigned DEFAULT '0',
   PRIMARY KEY (`fileid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

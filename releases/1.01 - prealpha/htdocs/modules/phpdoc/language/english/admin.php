@@ -1,6 +1,13 @@
 <?php
 
 	// Table Header Items
+	define('_AM_PHPDOC_TH_FOLDER', 'Folder');
+	define('_AM_PHPDOC_TH_BYTES', 'Size (bytes)');
+	define('_AM_PHPDOC_TH_EXTENSION', 'Extension');
+	define('_AM_PHPDOC_TH_FILETYPE', 'File Type');
+	define('_AM_PHPDOC_TH_WIDTH', 'Image Width');
+	define('_AM_PHPDOC_TH_HEIGHT', 'Image Height');
+	define('_AM_PHPDOC_TH_LINES', 'Lines');
 	define('_AM_PHPDOC_TH_ACTIONS', 'Actions');
 	define('_AM_PHPDOC_TH_CID', 'Category');
 	define('_AM_PHPDOC_TH_PARENTID', 'Parent');

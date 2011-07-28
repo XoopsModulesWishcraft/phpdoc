@@ -23,10 +23,18 @@ class PhpdocFile extends XoopsObject
 		$this->initVar('filename', XOBJ_DTYPE_TXTBOX, '', false, 255);
 		$this->initVar('classes', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('functions', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('imported', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('filetype', XOBJ_DTYPE_ENUM, '_MI_PHPDOC_FILETYPE_OTHER', false, false, false, array('_MI_PHPDOC_FILETYPE_PHP', '_MI_PHPDOC_FILETYPE_CSS', '_MI_PHPDOC_FILETYPE_HTML', '_MI_PHPDOC_FILETYPE_JAVA', '_MI_PHPDOC_FILETYPE_TXT', '_MI_PHPDOC_FILETYPE_IMAGE', '_MI_PHPDOC_FILETYPE_ASSET', '_MI_PHPDOC_FILETYPE_OTHER'));
+		$this->initVar('bytes', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('extension', XOBJ_DTYPE_TXTBOX, 'php', false, 20);
+		$this->initVar('width', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('height', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('lines', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('filemd5', XOBJ_DTYPE_TXTBOX, md5(false), false, 32);
 		$this->initVar('md5', XOBJ_DTYPE_TXTBOX, md5(false), false, 32);
 		$this->initVar('created', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('updated', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('actioned', XOBJ_DTYPE_INT, 0, false);
 	}
 	
 }

@@ -1,0 +1,51 @@
+<h1><{$smarty.const._AM_PHPDOC_CLASS_LIST_H1}></h1>
+<p><{$smarty.const._AM_PHPDOC_CLASS_LIST_P}></p>
+<div style='clear:both; height:60px;'>
+	<div style="float:right;"><{$pagenav}></div>
+</div>
+<form action="<{$php_self}>" method="post">
+<table>
+	<tr class="head">
+		<th><{$classid_th}></th>
+		<th><{$cids_th}></th>
+		<th><{$projectids_th}></th>
+		<th><{$versionids_th}></th>
+		<th><{$fileids_th}></th>
+		<th><{$weight_th}></th>
+		<th><{$name_th}></th>
+		<th><{$extends_th}></th>
+		<th><{$functions_th}></th>
+		<th><{$variables_th}></th>
+		<th><{$created_th}></th>
+		<th><{$updated_th}></th>
+		<th><{$smarty.const._AM_PHPDOC_TH_ACTIONS}></th>
+	</tr>
+	<{foreach item=item from=$files}>
+	<tr class="<{cycle values="even,odd"}>">
+		<td align='center'><{$item.classid}><{$item.forms.classid}></td>
+		<td align='center'><{$item.forms.cids}></td>
+		<td align='center'><{$item.forms.projectids}></td>
+		<td align='center'><{$item.forms.versionids}></td>
+		<td align='center'><{$item.forms.fileids}></td>
+		<td align='center'><{$item.forms.weight}></td>
+		<td align='center'><{$item.forms.name}></td>
+		<td align='center'><{$item.forms.extends}></td>
+		<td align='center'><{$item.functions}></td>
+		<td align='center'><{$item.variables}></td>
+		<td align='center'><{$item.when.created}></td>
+		<td align='center'><{$item.when.updated}></td>
+		<td align='center'><a href='<{$php_self}>?id=<{$item.classid}>&op=edit&fct=class'><{$smarty.const._EDIT}></a>&nbsp;|&nbsp;
+							<a href='<{$php_self}>?id=<{$item.classid}>&op=delete&fct=class'><{$smarty.const._DELETE}></a></td>
+	</tr>
+	<{/foreach}>
+	<tr class="foot">
+		<td colspan="20"><input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/></td>
+	</tr>
+</table>
+<input type="hidden" name="op" value="savelist"/>
+<input type="hidden" name="fct" value="file"/>
+<input type='hidden' value="<{$limit}>" name="limit"/>
+<input type='hidden' value="<{$start}>" name="start"/>
+<input type='hidden' value="<{$order}>" name="order"/>
+<input type='hidden' value="<{$sort}>" name="sort"/>
+</form>
